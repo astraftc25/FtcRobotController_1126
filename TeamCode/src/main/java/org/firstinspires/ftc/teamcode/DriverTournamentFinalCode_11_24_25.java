@@ -237,7 +237,7 @@ public class DriverTournamentFinalCode_11_24_25 extends LinearOpMode {
     {
         List<AprilTagDetection> myAprilTagDetections;
         AprilTagDetection myAprilTagDetection;
-        int myAprilTagIdCode=0;
+        int myAprilTagIdCode;
 
         myAprilTagDetections = myAprilTagProcessor.getDetections();
 
@@ -270,7 +270,7 @@ public class DriverTournamentFinalCode_11_24_25 extends LinearOpMode {
     {
         List<AprilTagDetection> myAprilTagDetections;
         AprilTagDetection myAprilTagDetection;
-        int myAprilTagIdCode=0;
+        int myAprilTagIdCode;
 
         myAprilTagDetections = myAprilTagProcessor.getDetections();
 
