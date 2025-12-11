@@ -3,14 +3,15 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous(name="AutonomousFinal", group="Auton")
-public class AutonomousFinalCode extends LinearOpMode {
+@Autonomous(name="AutonomousFinal_Velocity", group="Auton")
+public class AutonomousCodeVelocity extends LinearOpMode {
 
     private DcMotor frontleft, frontright, rearleft, rearright;
     private DcMotor intake, intake2;
-    private DcMotor launcher;
+    private DcMotorEx launcher;
     private Servo blocker;
 
     static final double COUNTS_PER_MOTOR_REV = 28 * 20;
@@ -20,7 +21,6 @@ public class AutonomousFinalCode extends LinearOpMode {
             (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) / (WHEEL_DIAMETER_INCHES * Math.PI);
 
     static final double TRACK_WIDTH_INCHES = 14.3125;
-
     static final double DIAGONAL_FACTOR = 1.41;
     static final double TURN_CORRECTION = 1.8;
     static final double INTAKE_POWER = 1.0;
@@ -37,7 +37,7 @@ public class AutonomousFinalCode extends LinearOpMode {
 
         intake  = hardwareMap.get(DcMotor.class, "intake");
         intake2 = hardwareMap.get(DcMotor.class, "intake2");
-        launcher = hardwareMap.get(DcMotor.class, "launcher");
+        launcher = hardwareMap.get(DcMotorEx.class, "launcher");
         blocker  = hardwareMap.get(Servo.class, "blocker");
 
         frontright.setDirection(DcMotor.Direction.REVERSE);
@@ -49,6 +49,7 @@ public class AutonomousFinalCode extends LinearOpMode {
         rearright.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         launcher.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        launcher.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
         telemetry.addData("Status", "Initialized");
         telemetry.update();
@@ -56,58 +57,75 @@ public class AutonomousFinalCode extends LinearOpMode {
         waitForStart();
 
         if (opModeIsActive()) {
-            launcher.setPower(1);
-            move("turnright", 24, 0.25, false); // shoot preloaded balls
+
+            // ---------------- PRELOAD SHOOT ----------------
+            launcher.setVelocity (1537);
+            move("turnright", 24, 0.25, false);
+            blocker.setPosition(0.65);
             sleep(300);
-            shootBalls(1.2, 4000);
+            shootBalls(2500);
+
+            // ---------------- MOVE TO INTAKE BALLS ----------------
 
             move("turnleft", 24, 0.25, false);
             sleep(300);
 
-            move("forward", 28, 0.5, false); // intake balls during move
+            move("forward", 20, 1, false);
+            sleep(300);
+            
+            move("turnright", 90, 0.25, true);
+            sleep(1000);
+
+            move("forward", 50, 1, true);
             sleep(300);
 
-            move("turnright", 90, 0.25, false);
+            move("backward", 50, 1, false);
             sleep(300);
 
-            move("forward", 18, 0.5, true);
+            // ---------------- DRIVE TO NEXT SHOOT POSITION ----------------
+            blocker.setPosition(0.0);
+            move("turnleft", 80, 0.25, false);
             sleep(300);
 
-            move("backward", 18, 0.5, false);
-            sleep(300);
+            move("forward", 45, 1, false);
+            sleep(1000);
 
-            move("turnleft", 90, 0.25, false);
-            sleep(300);
 
-            move("forward", 36, 0.5, false);
-            sleep(300);
+            // ---------------- SECOND SHOOT ----------------
 
-            launcher.setPower(0.75);
+            launcher.setVelocity(1400);
+            move("turnright", 50, 0.25, false);
+           // blocker.setPosition(.65);
+            //sleep(1000);
+            shootBalls(2500);
 
-            move("turnright", 40, 0.25, true);
-            sleep(300);
-            shootBalls(1.2, 4000);
+            // ---------------- MOVE TO GET FINAL BALLS ----------------
 
             move("turnleft", 40, 0.25, false);
             sleep(300);
 
-            move("backward", 12, 0.5, false);
+
+            move("backward", 18, 1, false);
             sleep(300);
 
-            move("turnright", 90, 0.25, false);
+
+            move("turnright", 90, 0.25, true);
+            sleep(1000);
+
+
+            move("forward", 24, 1, true);
             sleep(300);
 
-            move("forward", 18, 0.5, true);
-            sleep(300);
 
-            move("backward", 18, 0.5, false);
-            sleep(300);
+            move("backward", 24, 1, false);
+            //sleep(300);
 
-            launcher.setPower(0.44);
-
+            // ---------------- FINAL SHOOT ----------------
+            launcher.setVelocity(1300);
             move("turnleft", 50, 0.25, true);
+            blocker.setPosition(0.65);
             sleep(300);
-            shootBalls(1.2, 4000);
+            shootBalls(2500);
         }
     }
 
@@ -166,6 +184,7 @@ public class AutonomousFinalCode extends LinearOpMode {
     }
 
     private void moveAllWheels(double flInches, double frInches, double rlInches, double rrInches, double power, boolean runIntake) {
+
         int flTarget = frontleft.getCurrentPosition() + (int)(flInches * COUNTS_PER_INCH);
         int frTarget = frontright.getCurrentPosition() + (int)(frInches * COUNTS_PER_INCH);
         int rlTarget = rearleft.getCurrentPosition() + (int)(rlInches * COUNTS_PER_INCH);
@@ -214,18 +233,15 @@ public class AutonomousFinalCode extends LinearOpMode {
         rearright.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
     }
 
-    private void shootBalls(double power, long timeMs) {
+    private void shootBalls(long timeMs) {
         blocker.setPosition(BLOCKER_DOWN);
-        sleep(200);
-
-
+        sleep(2000);
 
         intake.setPower(INTAKE_POWER);
         intake2.setPower(INTAKE_POWER);
 
         sleep(timeMs);
 
-        launcher.setPower(0);
         intake.setPower(0);
         intake2.setPower(0);
 
