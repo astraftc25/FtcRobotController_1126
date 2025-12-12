@@ -7,7 +7,7 @@ import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
 @Autonomous(name="AutonomousFinal_Velocity", group="Auton")
-public class AutonomousCodeVelocity extends LinearOpMode {
+public class AutonomousCodeBlueFar extends LinearOpMode {
 
     private DcMotor frontleft, frontright, rearleft, rearright;
     private DcMotor intake, intake2;
@@ -59,21 +59,21 @@ public class AutonomousCodeVelocity extends LinearOpMode {
         if (opModeIsActive()) {
 
             // ---------------- PRELOAD SHOOT ----------------
-            launcher.setVelocity (1537);
-            move("turnright", 24, 0.25, false);
+            launcher.setVelocity (1534);
+            move("turnleft", 24, 0.25, false);
             blocker.setPosition(0.65);
             sleep(300);
             shootBalls(2500);
 
             // ---------------- MOVE TO INTAKE BALLS ----------------
 
-            move("turnleft", 24, 0.25, false);
+            move("turnright", 24, 0.25, false);
             sleep(300);
 
             move("forward", 20, 1, false);
             sleep(300);
             
-            move("turnright", 90, 0.25, true);
+            move("turnleft", 90, 0.25, true);
             sleep(1000);
 
             move("forward", 50, 1, true);
@@ -84,7 +84,7 @@ public class AutonomousCodeVelocity extends LinearOpMode {
 
             // ---------------- DRIVE TO NEXT SHOOT POSITION ----------------
             blocker.setPosition(0.0);
-            move("turnleft", 80, 0.25, false);
+            move("turnright", 80, 0.25, false);
             sleep(300);
 
             move("forward", 45, 1, false);
@@ -93,15 +93,15 @@ public class AutonomousCodeVelocity extends LinearOpMode {
 
             // ---------------- SECOND SHOOT ----------------
 
-            launcher.setVelocity(1400);
-            move("turnright", 50, 0.25, false);
+            launcher.setVelocity(1395);
+            move("turnleft", 50, 0.25, false);
            // blocker.setPosition(.65);
             //sleep(1000);
             shootBalls(2500);
 
             // ---------------- MOVE TO GET FINAL BALLS ----------------
 
-            move("turnleft", 40, 0.25, false);
+            move("turnright", 40, 0.25, false);
             sleep(300);
 
 
@@ -109,7 +109,7 @@ public class AutonomousCodeVelocity extends LinearOpMode {
             sleep(300);
 
 
-            move("turnright", 90, 0.25, true);
+            move("turnleft", 90, 0.25, true);
             sleep(1000);
 
 
@@ -122,7 +122,7 @@ public class AutonomousCodeVelocity extends LinearOpMode {
 
             // ---------------- FINAL SHOOT ----------------
             launcher.setVelocity(1300);
-            move("turnleft", 50, 0.25, true);
+            move("turnright", 50, 0.25, true);
             blocker.setPosition(0.65);
             sleep(300);
             shootBalls(2500);
