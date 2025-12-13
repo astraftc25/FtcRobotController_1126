@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
-@Disabled
-@Autonomous(name="AutonomousFinal_Velocity", group="Auton")
+
+@Autonomous(name="AutonomousCodeRedFar", group="Auton")
 public class AutonomousCodeRedFar extends LinearOpMode {
 
     private DcMotor frontleft, frontright, rearleft, rearright;
@@ -60,15 +60,15 @@ public class AutonomousCodeRedFar extends LinearOpMode {
         if (opModeIsActive()) {
 
             // ---------------- PRELOAD SHOOT ----------------
-            launcher.setVelocity (1534);
-            move("turnright", 24, 0.25, false);
+            launcher.setVelocity (1520);
+            move("turnright", 26, 0.25, false);
             blocker.setPosition(0.65);
             sleep(300);
             shootBalls(2500);
 
             // ---------------- MOVE TO INTAKE BALLS ----------------
 
-            move("turnleft", 24, 0.25, false);
+            move("turnleft", 26, 0.25, false);
             sleep(300);
 
             move("forward", 20, 1, false);
@@ -94,7 +94,7 @@ public class AutonomousCodeRedFar extends LinearOpMode {
 
             // ---------------- SECOND SHOOT ----------------
 
-            launcher.setVelocity(1395);
+            launcher.setVelocity(1320);
             move("turnright", 50, 0.25, false);
             // blocker.setPosition(.65);
             //sleep(1000);

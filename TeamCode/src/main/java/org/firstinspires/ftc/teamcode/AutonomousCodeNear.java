@@ -6,8 +6,8 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.hardware.Servo;
 
-@Autonomous(name="AutonomousCodeBlueFar", group="Auton")
-public class AutonomousCodeBlueFar extends LinearOpMode {
+@Autonomous(name="AutonomousCodeNear", group="Auton")
+public class AutonomousCodeNear extends LinearOpMode {
 
     private DcMotor frontleft, frontright, rearleft, rearright;
     private DcMotor intake, intake2;
@@ -59,15 +59,16 @@ public class AutonomousCodeBlueFar extends LinearOpMode {
         if (opModeIsActive()) {
 
             // ---------------- PRELOAD SHOOT ----------------
-            launcher.setVelocity (1520);
-            move("turnleft", 26, 0.25, false);
+            launcher.setVelocity (1100);
+            move("backward", 36, 1, false);
+            sleep(2000);
             blocker.setPosition(0.65);
             sleep(300);
-            shootBalls(2500);
+            shootBalls(1700);
 
-            // ---------------- MOVE TO INTAKE BALLS ----------------
-
-            move("turnright", 26, 0.25, false);
+            // ---------------- MOVE BACK TO SHOOT BALLS ----------------
+/*
+            move("turnright", 24, 0.25, false);
             sleep(300);
 
             move("forward", 20, 1, false);
@@ -93,7 +94,7 @@ public class AutonomousCodeBlueFar extends LinearOpMode {
 
             // ---------------- SECOND SHOOT ----------------
 
-            launcher.setVelocity(1320);
+            launcher.setVelocity(1395);
             move("turnleft", 50, 0.25, false);
            // blocker.setPosition(.65);
             //sleep(1000);
@@ -126,6 +127,7 @@ public class AutonomousCodeBlueFar extends LinearOpMode {
             blocker.setPosition(0.65);
             sleep(300);
             shootBalls(2500);
+ */
         }
     }
 
